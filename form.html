@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+</head>
+<body>
+    <h1>User Info</h1>
+    <!-- action attribute signifies the address of the site where to go with the query params -->
+    <!-- <form action="https://www.amazon.in/s"> -->
+    <!-- with method as POST, the query params will not into the URL and we need to mention -->
+    <!-- the server URL which will handle the POST request as browser can only handle the GET req -->
+    <!-- name attribute is the key in the query params -->
+    <!-- autocomplete as off=> no suggestions will be shown for this field -->
+    <!-- for and id attributes maps the input field with the label -->
+    <!--after mapping if we click on the label on UI then the respective input field will work -->
+    <!-- same name property is given so that at a time only one radio option is selected -->
+    <!-- value attribute is the default value of the query param, name is the key for that value -->
+    <!-- this will open the amazon.in/s with the key of the Query param as k and value -->
+    <!-- which is typed in the input form -->
+    <!-- type radio=>select only 1 option, type checkbox=>select multiple values -->
+    <!-- select is for selecting multiple values and better UX experience -->
+     <!-- by novalidate, none of the validations will run -->
+      <!-- by default all the buttons(button HTML elements) have type as submit -->
+        <form action="/thankyou.html" method="GET" novalidate>
+         <label for="name">Name of the user:</label>
+        <input type="text" placeholder="User name" name="name" required autocomplete="off" id="name"/>
+        <br>
+        <br>
+        <label for="email">Active email of the user:</label>
+        <input type="email" placeholder="User email" name="email" required value="@gmail.com" id="email"/>
+        <br>
+        <br>
+        <label for="number">Phone number:</label>
+        <input type="number" placeholder="User Phone" name="mobile" required id="number" disabled/>
+        <br>
+        <br>
+        <label>Gender</label><br>
+
+        <input type="radio" name="gender" value="ml" id="male-input" checked/><label for="male-input">Male</label><br>
+        <input type="radio" name="gender" value="fml" id="female-input" /><label for="female-input">Female</label><br>
+
+        <label for="web-d">Hobby</label>
+        <input type="checkbox" value="web-development" id="web-d"/>
+        <br>
+        <label for="city">City</label>
+        <select name="city" id="city">
+            <option value="del">Delhi</option>
+            <option value="jai">Jaipur</option>
+            <option  value="bng" selected>Bangalore</option>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="Done"/>
+        <input type="reset" value="Reset the values"/>
+        <button type="submit">submit</button>
+        <button type="reset">Reset</button>
+        
+    </form>
+
+
+
+</body>
+</html>

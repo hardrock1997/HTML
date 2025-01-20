@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Page</title>
+</head>
+<body>
+
+    <h1>Contact Us</h1>
+    <!-- <a href="../Pages/HomePage.html">HomePage(target as self)</a>
+    <a href="../Pages/HomePage.html" target="_blank">HomePage(target as blank)</a> -->
+    <a href="../Pages/HomePage.html" target="_parent">HomePage(target as parent)</a>
+    <!-- target as parent will render the src at the parent level ie iframe.html -->
+     <a href="../Pages/HomePage.html" target="_top">HomePage(target as top)</a>
+     <!-- target as top will open the src in the root level of the nestings -->
+      <!-- here it will be iframe.html -->
+    <!-- <a href="../index.html">Landing Page</a> -->
+    <iframe src="../Child.html"></iframe>
+</body>
+</html>
