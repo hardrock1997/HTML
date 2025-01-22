@@ -1,0 +1,30 @@
+ul {
+    background-color: beige;
+}
+ol {
+    background-color: cadetblue;
+}
+.fruit{
+    color:crimson;
+}
+.vegetable {
+    color: orange;
+}
+
+/* compound selection */
+/* order of classes does not matter as the css rule will be the same for any order */
+/* no space should be there in doing compound selection */
+.fruit.ul {
+    background-color: blue;
+}
+.vegetable.ul {
+    background-color: chartreuse;
+}
+p.fruit {
+    color: royalblue;
+}
+
+/* Id selector */
+#item-1 {
+    color: silver;
+}
