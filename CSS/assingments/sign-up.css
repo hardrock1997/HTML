@@ -1,0 +1,110 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    background-color: aliceblue;
+}
+
+.sign-up-container {
+    text-align: center;
+    background-color: #FFFFFF;
+    width: 520px;
+    height: 728px;
+    padding: 40px 80px 40px 80px;
+    border: 1px solid #FFFFFF;
+    border-radius: 40px;
+    position: absolute;
+    top: 176px;
+    left: 400px;
+
+}
+h1 {
+    background-color: #FFFFFF; 
+    width: 306px;
+    height: 48px;
+}
+.container {
+    width: 360px;
+    height: 336px;
+    background-color: #FFFFFF; 
+}
+
+.input-field-container {
+    height: 72px;
+    width: 360px;
+    background-color: #FFFFFF;
+    margin-top: 16px;
+    text-align: left;
+    position: relative;
+}
+.eye {
+    position: absolute;
+    top: 178px;
+    left: 324px;
+}
+label {
+    width: 79px;
+    height: 16px;
+    background-color: #FFFFFF;
+}
+
+input {
+    width: 360px;
+    height: 48px;
+    border: 1px solid #E7EAEE;
+    border-radius: 6px;
+    background-color: #F7F8F9;
+    margin-bottom: 8px;
+}
+.buttons {
+    width: 360px;
+    height: 152px;
+    margin-top: 16px;
+    background-color: #FFFFFF;
+    margin-bottom: 16px;
+    
+}
+.sgn-button {
+    width: 360px;
+    height: 48px;
+    background-color: #10B981;
+    color: #FFFFFF;
+    padding: 16px 8px 16px 8px;
+    border-radius: 35px;
+    margin-bottom: 8px;
+}
+.or {
+    background-color: #FFFFFF;
+    text-align: center;
+    width: 23px;
+    height: 16px;
+}
+.google-sgn-button {
+    width: 360px;
+    height: 56px;
+    background-color: #191D23;
+    padding: 16px 8px 16px 8px;
+    border-radius: 35px;
+    margin-top: 8px;
+    color: #FFFFFF;
+    position: relative;
+}
+.google {
+    position: absolute;
+    left: 80px;
+    top: 15px;
+    background-color: #191D23;
+}
+
+.footer {
+    background-color: #FFFFFF;
+}
+.login {
+    background-color: #FFFFFF;
+    color: #10B981;
+}
+.starting-account {
+    width: 258px;
+    height: 16px;
+    background-color: #FFFFFF;
+}
