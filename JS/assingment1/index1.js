@@ -13,6 +13,7 @@ function insertUserNamesInDiv(names) {
     const n=names.length;
     for(let i=0;i<n;++i) {
         createListElement(names[i]);
+        // document.write(`${i+1}.${names[i]}<br>`);
     }
 }
 
