@@ -35,7 +35,6 @@ function displayRequiredData(data1=[],data2=[]) {
     if(data2) {
         for(let i=0;i<data2.length;++i) {
             const li=document.createElement("li");
-            console.log(data2[i]['name'],data2[i]['id'])
             li.textContent=`${i+1} : Name:${data2[i]['name']},Cuisine:${data2[i]['cuisine']}`;
             ul2.appendChild(li);
         }
