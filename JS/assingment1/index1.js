@@ -1,3 +1,10 @@
+
+
+
+//Run Each part by commenting the others!
+
+
+
 //---------part a-------------
 const p=prompt("Enter the number of users");
 let pInt=Number(p);
