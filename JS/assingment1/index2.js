@@ -9,12 +9,15 @@ async function main() {
     const recipes=data.recipes;
     const requiredData=getRequiredData(recipes,[]);
     const requiredData1=getRequiredData1(recipes,[]);
-    displayRequiredData(requiredData,requiredData1);
+    const requiredData2=getRequiredData2(recipes,[]);
+    const requiredData3=getRequiredData3(recipes,[]);
+    displayRequiredData(requiredData,requiredData1,requiredData2,requiredData3);
 }
 main();
 
 
-function displayRequiredData(data1=[],data2=[]) {
+
+function displayRequiredData(data1=[],data2=[],data3=[],data4=[]) {
     const div=document.getElementById("name_cuisines");
     const h1=document.createElement('h1');
     h1.textContent="Total Recipes";
@@ -23,6 +26,15 @@ function displayRequiredData(data1=[],data2=[]) {
     const h2=document.createElement('h1');
     h2.textContent="Filtered Recipes by rating > 4.5";
     const ul2=document.createElement("ul");
+    const div3=document.getElementById("indian_italian_tag_dishes");
+    const h3=document.createElement("h1");
+    h3.textContent="Recipes with Indian or Italian tags";
+    const ul3=document.createElement("ul");
+    const div4=document.getElementById("tag_wise_frequency");
+    const h4=document.createElement("h1");
+    h4.textContent="Tagwise frequency";
+    const ul4=document.createElement("ul");
+
     if(data1) {
         for(let i=0;i<data1.length;++i) {
             const li=document.createElement("li");
@@ -41,7 +53,80 @@ function displayRequiredData(data1=[],data2=[]) {
         div2.appendChild(h2);
         div2.appendChild(ul2);
     }
+    if(data3) {
+        for(let i=0;i<data3.length;++i) {
+            const li=document.createElement("li");
+            li.textContent=`${i+1} : Name:${data3[i]['name']}`;
+            ul3.appendChild(li);
+        }
+        div3.appendChild(h3);
+        div3.appendChild(ul3);
+    }
+    if(data4) {
+        for(let i=0;i<data4.length;++i) {
+            const li=document.createElement("li");
+            li.textContent=`${i+1}: Tag:${data4[i][i]['tag']}...Frequency:${data4[i][i]['frequency']}`;
+            ul4.appendChild(li);
+        }
+        div4.appendChild(h4);
+        div4.appendChild(ul4);
+    }
  
+}
+
+
+function getRequiredData3(recipes,arr) {
+    const freqMap=new Map();
+
+    for(let i=0;i<recipes.length;++i) {
+        const tags=recipes[i].tags;
+        for(let j=0;j<tags.length;++j) {
+            if(freqMap.has(tags[j])) {
+                const existingFreq=freqMap.get(tags[j]);
+                freqMap.set(tags[j],existingFreq+1);
+            }
+            else {
+                freqMap.set(tags[j],1);
+            }
+        }
+    }
+
+    let index=0;
+    for(const [key,value] of freqMap) {
+        const obj={};
+        obj[index]={"tag":key,"frequency":value};
+        arr.push(obj);
+        index++;
+    }
+    return arr;
+}
+
+
+function getRequiredData2(recipes,arr) {
+
+    //--------for Each---------
+    recipes.forEach((rec)=>{
+        const tags=rec.tags;
+        if(tags.find((tag)=>tag==="Indian" || tag==="Italian")) {
+            arr.push(rec);
+        }
+    })
+
+
+    //--------filter then map---------
+    // recipes.filter((rec)=>{
+    //     const tags=rec.tags;
+    //     return tags.find((tag)=>tag==="Indian" || tag==="Italian");
+    // }).map((rec)=>{
+    //     arr.push(rec);
+    // })
+
+    //--------flat map---------
+    
+
+    return arr;
+
+    
 }
 
 
