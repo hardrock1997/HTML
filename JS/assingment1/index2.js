@@ -3,10 +3,13 @@ async function getData() {
     const data=await res.json();
     return data;
 }
-
+let recipes=[];
+let div=null;
 async function main() {
     const data= await getData()
-    const recipes=data.recipes;
+    recipes=data.recipes;
+    div=document.getElementById('Cards');
+    generateCard(recipes);
     const requiredData=getRequiredData(recipes,[]);
     const requiredData1=getRequiredData1(recipes,[]);
     const requiredData2=getRequiredData2(recipes,[]);
@@ -14,6 +17,36 @@ async function main() {
     displayRequiredData(requiredData,requiredData1,requiredData2,requiredData3);
 }
 main();
+
+
+
+function generateCard(recipes) {
+    for(const rec of recipes) {
+        const parentDiv=document.createElement('div');
+        parentDiv.setAttribute('id',rec.id)
+        const src=rec.image;
+        parentDiv.innerHTML = `
+        
+        <div class="image_div">
+            <img src="${src}" alt="recipe card" />
+        </div>
+        <div class="recipe_name">
+            ${rec.name}
+        </div>
+        <div>
+            <button id="delete_recipe" onclick="deleteRecipe(${rec.id})">Delete</button>
+        </div>
+     
+        `;
+        div.appendChild(parentDiv);
+    }
+}
+
+function deleteRecipe(id) {
+    recipes.splice(id-1,1);
+    const recipeToDelete=document.getElementById(id);
+    div.removeChild(recipeToDelete);
+}
 
 
 
