@@ -122,6 +122,12 @@ function getRequiredData2(recipes,arr) {
     // })
 
     //--------flat map---------
+    // recipes.flatMap((rec)=>{
+    //     const tags=rec.tags;
+    //         if(tags.find((tag)=>tag==="Indian" || tag==="Italian")) {
+    //             arr.push(rec);
+    //         }
+    // })
     
 
     return arr;
@@ -154,6 +160,15 @@ function getRequiredData1(recipes,arr) {
     //     obj=rec
     //     arr.push(obj);
     // })
+
+
+    //--------flatMap---------
+    // recipes.flatMap((rec)=>{
+    //     if(rec['rating']>4.5) {
+    //         arr.push(rec);
+    //     }
+    // })
+
     return arr;
 }
 
