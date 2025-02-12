@@ -43,7 +43,6 @@ function generateCard(recipes) {
 }
 
 function deleteRecipe(id) {
-    recipes.splice(id-1,1);
     const recipeToDelete=document.getElementById(id);
     div.removeChild(recipeToDelete);
 }
