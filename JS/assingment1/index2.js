@@ -14,12 +14,12 @@ async function main() {
   const requiredData1 = getRequiredData1(recipes, []);
   const requiredData2 = getRequiredData2(recipes, []);
   const requiredData3 = getRequiredData3(recipes, []);
-//   displayRequiredData(
-//     requiredData,
-//     requiredData1,
-//     requiredData2,
-//     requiredData3
-//   );
+  displayRequiredData(
+    requiredData,
+    requiredData1,
+    requiredData2,
+    requiredData3
+  );
 }
 main();
 
@@ -47,8 +47,12 @@ function generateCard(recipes) {
 }
 
 function deleteRecipe(id) {
-  const recipeToDelete = document.getElementById(id);
-  div.removeChild(recipeToDelete);
+    const filteredRecipes=recipes.filter((rec)=>rec.id!==id);
+    recipes=filteredRecipes;
+    div.innerHTML="";
+    generateCard(filteredRecipes);
+//   const recipeToDelete = document.getElementById(id);
+//   div.removeChild(recipeToDelete);
 }
 
 function displayRequiredData(data1 = [], data2 = [], data3 = [], data4 = []) {
