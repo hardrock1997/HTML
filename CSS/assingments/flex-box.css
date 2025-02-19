@@ -7,6 +7,7 @@
 .header {
     background-color:darkblue;
     padding: 0 50px;
+    width: 100vw;
 }
 .nav {
     display: flex;
@@ -55,3 +56,39 @@ input {
 .icon:hover {
     border: 5px dashed bisque;
 }
+
+.main {
+    display: grid;
+    grid-template-columns: 180px auto;
+    margin: 0 20px;
+    height: 100vh;
+}
+.grid_cell {
+    background-color:aquamarine;
+    padding:48px 16px;
+}
+.aside {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+img {
+    width: 100%;
+    height: 25%;
+}
+ .cards {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    height: 100%;
+    column-gap: 12px;
+    row-gap: 12px;
+    margin: 20px;
+ }
+ .card {
+    height: 200px;
+    width: 360px;
+    background-color: grey;
+    border-radius: 10px;
+    padding: 24px;
+
+ }
