@@ -4,7 +4,7 @@ export const autoSuggestionsUrl=
  export const autoSuggestionsUrlOptions = {
 	method: 'GET',
 	headers: {
-		'x-rapidapi-key': '3d7bdfecdcmshda8a32f2a127f6dp10e1ddjsnae68667b2359',
+		'x-rapidapi-key': '66338b32a5msh2459e96ed8d139ep1ddd80jsn2df0d3aa3d94',
 		'x-rapidapi-host': 'web-search-autocomplete.p.rapidapi.com'
 	}
 };

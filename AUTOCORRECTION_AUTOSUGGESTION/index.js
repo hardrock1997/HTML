@@ -13,10 +13,12 @@ function suggestionsHelper(suggestions, suggestionsContainer) {
   heading.style.textAlign = "center";
   suggestionsContainer.appendChild(heading);
   const suggs = suggestions?.filter((_, i) => i < 3);
-  suggs?.forEach((sugg) => {
+  suggs?.forEach((sugg,i) => {
     const sug = document.createElement("h4");
     sug.style.color = "white";
     sug.style.textAlign = "center";
+    sug.setAttribute('id',i+1);
+    sug.setAttribute('tabindex',"0");
     sug.innerText = sugg.query;
     suggestionsContainer.appendChild(sug);
   });
@@ -28,10 +30,12 @@ function completionsHelper(completions, suggestionsContainer) {
   heading2.style.color = "white";
   heading2.style.textAlign = "center";
   suggestionsContainer.appendChild(heading2);
-  completions.forEach((com) => {
+  completions.forEach((com,i) => {
     const cmp = document.createElement("h4");
     cmp.style.color = "white";
     cmp.style.textAlign = "center";
+    cmp.setAttribute('id',i+1);
+    cmp.setAttribute('tabindex',"0");
     cmp.innerText = com.text;
     suggestionsContainer.appendChild(cmp);
   });
@@ -55,6 +59,11 @@ function handleLoadingBar(delta) {
   timer = setTimeout(() => {
     loadingBar.style.display = "none";
   }, 1000);
+}
+
+function handleSuggestionsClick(e) {
+    const target=e.target;
+    console.log(e.key,target,"YESS")
 }
 
 async function getAutoCompleteSuggestions(inputValue) {
@@ -85,6 +94,8 @@ async function getAutoCompleteSuggestions(inputValue) {
       suggestionsContainer,
       JSON.parse(completions).predictions
     );
+
+    // suggestionsContainer.addEventListener('keydown',(e)=>handleSuggestionsClick(e));
   }
 }
 
