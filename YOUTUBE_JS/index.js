@@ -1,3 +1,4 @@
+
 import {
   trendingVideosUrl,
   trendingVideosOptions,
@@ -50,28 +51,19 @@ document.addEventListener("DOMContentLoaded", showTrendingVideos);
 
 async function getSearchedVideos(searchValue) {
   const data = await fetch(searchVideoUrl + searchValue, searchVideosOptions);
-  const searchedVideos = await data.json();
-
-  return searchedVideos?.contents;
+  const searchedVideosOnbj = await data.json();
+  const searchedVideos = searchedVideosOnbj?.contents;
+  const videos = document.getElementById("videos");
+  videos.innerHTML='';
+  console.log(searchedVideos, "searchedVideos");
+//   generateCard(searchedVideos,videos)
 }
 
 function debounce(fn, delay) {
-  let timer;
+  let timer; // id
   return function (...args) {
-    // wrapping inside th Promise object as the setTimeout cannot return any value and we need the returned value by getSearchedVideos
-    return new Promise((resolve, reject) => {
-      clearTimeout(timer);
-      timer = setTimeout(async () => {
-        try {
-          // const result = await fn.apply(this, args);
-          // need to understand the this keywork first
-          const result = await fn(args[0]);
-          resolve(result);
-        } catch (error) {
-          reject(error);
-        }
-      }, delay);
-    });
+    clearTimeout(timer);
+    timer = setTimeout(()=>fn(...args), delay);
   };
 }
 
@@ -79,12 +71,42 @@ const debouncedSearch = debounce(getSearchedVideos, 500);
 
 async function handleSearch(e) {
   const searchValue = e.target.value;
-  const searchedVideos = await debouncedSearch(searchValue);
-  const videos = document.getElementById("videos");
-  videos.innerHTML='';
-  console.log(searchedVideos, "searchedVideos");
-  generateCard(searchedVideos,videos)
+//   await debouncedSearch(searchValue);
+debouncedSearch(searchValue);
+
+//   const searchedVideos = await debouncedSearch(searchValue);
+//   const videos = document.getElementById("videos");
+//   videos.innerHTML='';
+//   console.log(searchedVideos, "searchedVideos");
+//   generateCard(searchedVideos,videos)
 }
 
 const searchBar = document.getElementsByClassName("search_input")[0];
 searchBar.addEventListener("keyup", (e) => handleSearch(e));
+
+
+
+
+
+
+
+// var a = 50;
+
+// const obj={
+//     a:100,
+//     b:20,
+//     hello: function(){
+//         console.log(this.a);
+//     },
+//     hello1: ()=>{
+//         console.log(this);
+//     }
+// }
+
+// const newFunc = ()=>{
+//     console.log(this);
+// }
+
+// obj.hello()
+// obj.hello1()
+// newFunc();

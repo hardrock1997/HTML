@@ -1,0 +1,34 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+#parent_container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+#parent_container> input {
+    width: 500px;
+    margin-top: 20px;
+    height: 30px;
+    border-radius: 10px;
+    padding: 10px;
+}
+#parent_container .auto_suggestions_correction {
+    margin-top: 3px;
+    border: 1px solid black;
+    display: none;
+    flex-direction: column;
+    width: 500px;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: black;
+}
+.loading_bar {
+    width: 500px;
+    height: 5px;
+    border: 1px solid black;
+    border-radius: 20px;
+}

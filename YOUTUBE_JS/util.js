@@ -15,3 +15,19 @@ export const searchVideosOptions = {
 		'x-rapidapi-host': 'youtube138.p.rapidapi.com'
 	}
 };
+
+
+// // wrapping inside th Promise object as the setTimeout cannot return any value and we need the returned value by getSearchedVideos
+// return new Promise((resolve, reject) => {
+// 	clearTimeout(timer);
+// 	timer = setTimeout(async () => {
+// 	  try {
+// 		// const result = await fn.apply(this, args);
+// 		// need to understand the this keywork first
+// 		const result = await fn(args[0]);
+// 		resolve(result);
+// 	  } catch (error) {
+// 		reject(error);
+// 	  }
+// 	}, delay);
+//   });
