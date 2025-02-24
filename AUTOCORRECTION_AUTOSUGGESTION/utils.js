@@ -1,14 +1,5 @@
 export const autoSuggestionsUrl=
 'https://dummyjson.com/recipes/search?q='
-// "https://web-search-autocomplete.p.rapidapi.com/autocomplete?language=en&region=us&user_agent=desktop&query=";
-
-//  export const autoSuggestionsUrlOptions = {
-// 	method: 'GET',
-// 	headers: {
-// 		'x-rapidapi-key': '66338b32a5msh2459e96ed8d139ep1ddd80jsn2df0d3aa3d94',
-// 		'x-rapidapi-host': 'web-search-autocomplete.p.rapidapi.com'
-// 	}
-// };
 
 export const autoCompleteUrl= 'https://typewise-ai.p.rapidapi.com/completion/sentence_complete';
 
