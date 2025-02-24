@@ -1,11 +1,15 @@
 import {
   autoCompleteUrl,
   autoCompleteOptions,
-  autoSuggestionsUrlOptions,
+  // autoSuggestionsUrlOptions,
   autoSuggestionsUrl,
 } from "./utils.js";
 
 function suggestionsHelper(suggestions, suggestionsContainer) {
+  suggestionsContainer.innerHTML = "";
+  if(suggestions.length===0) {
+    return;
+  }
   suggestionsContainer.innerHTML = "";
   const heading = document.createElement("h2");
   heading.innerText = "Suggestions";
@@ -19,12 +23,15 @@ function suggestionsHelper(suggestions, suggestionsContainer) {
     sug.style.textAlign = "center";
     sug.setAttribute('id',i+1);
     sug.setAttribute('tabindex',"0");
-    sug.innerText = sugg.query;
+    sug.innerText = sugg.name;
     suggestionsContainer.appendChild(sug);
   });
 }
 
 function completionsHelper(completions, suggestionsContainer) {
+  if(completions.length===0) {
+    return;
+  }
   const heading2 = document.createElement("h2");
   heading2.textContent = "Completions";
   heading2.style.color = "white";
@@ -61,17 +68,29 @@ function handleLoadingBar(delta) {
   }, 1000);
 }
 
+let timesCalled=0;
 function handleSuggestionsClick(e) {
     const target=e.target;
-    console.log(e.key,target,"YESS")
+    const suggestion=document.getElementById(target.id);
+    if(suggestion) {
+      if(timesCalled%2===0) {
+        suggestion.style.backgroundColor="red";
+      }
+      else {
+        suggestion.style.backgroundColor="";
+      }
+      timesCalled++;
+    }
+  
+    
 }
 
+let thisCalled=0;
 async function getAutoCompleteSuggestions(inputValue) {
   const suggestionsContainer = document.getElementsByClassName(
     "auto_suggestions_correction"
   )[0];
   if (inputValue === "") {
-    //clearing the UI if nothing is searched.
     suggestionsContainer.style.display = "none";
   } else {
     let x1 = Date.now();
@@ -81,21 +100,32 @@ async function getAutoCompleteSuggestions(inputValue) {
       language: "en",
     });
     const [suggestionsData, completionsData] = await Promise.all([
-      fetch(autoSuggestionsUrl + inputValue, autoSuggestionsUrlOptions),
+      fetch(autoSuggestionsUrl + inputValue),
       fetch(autoCompleteUrl, autoCompleteOptions),
     ]);
     const suggestions = await suggestionsData.json();
     const completions = await completionsData.text();
     let x2 = Date.now();
     handleLoadingBar(x2 - x1);
+    const suggestionsResponse=suggestions?.recipes
+    const predectionsResponse=JSON.parse(completions).predictions
+    if(suggestionsResponse?.length===0 && predectionsResponse.length===0) {
+      suggestionsContainer.style.display="none";
+      return;
+    }
     suggestionsContainer.style.backgroundColor = "black";
+    suggestionsContainer.style.border="1px solid black";
+    suggestionsContainer.style.borderRadius="20px";
     generateSuggestions(
-      suggestions?.data,
+      suggestionsResponse,
       suggestionsContainer,
-      JSON.parse(completions).predictions
+      predectionsResponse
     );
-
-    // suggestionsContainer.addEventListener('keydown',(e)=>handleSuggestionsClick(e));
+    if(thisCalled>0) {
+      suggestionsContainer.removeEventListener('click',handleSuggestionsClick);
+    }
+    else suggestionsContainer.addEventListener('click',(e)=>handleSuggestionsClick(e));
+    thisCalled++;
   }
 }
 
@@ -113,22 +143,17 @@ const debouncedFn = debounce(getAutoCompleteSuggestions, 300);
 
 async function handleInputBar(e) {
   const inputValue = e.target.value;
+  const suggestionsContainer = document.getElementsByClassName(
+    "auto_suggestions_correction"
+  )[0];
+  if(inputValue==="") {
+    suggestionsContainer.style.display="none";
+    return;
+  }
   debouncedFn(inputValue);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const suggestionsContainer = document.getElementsByClassName(
-    "auto_suggestions_correction"
-  )[0];
   const inputBar = document.getElementById("input_bar");
-  // clearing the last suggestions and hiding the suggestionsContainer when the foucs is removed.
-  inputBar.addEventListener("change", () => {
-    const suggestionsContainer = document.getElementsByClassName(
-      "auto_suggestions_correction"
-    )[0];
-    suggestionsContainer.innerHTML = "";
-    suggestionsContainer.style.display = "none";
-  });
-  inputBar.addEventListener("focus", handleInputBar);
   inputBar.addEventListener("keyup", handleInputBar);
 });

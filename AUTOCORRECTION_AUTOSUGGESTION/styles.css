@@ -18,13 +18,13 @@
 }
 #parent_container .auto_suggestions_correction {
   margin-top: 3px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: none;
   flex-direction: column;
   width: 500px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   padding: 5px;
-  background-color: black;
+  /* background-color: black; */
 }
 #loading_bar {
   height: 5px;
