@@ -1,16 +1,17 @@
 import {
   autoCompleteUrl,
   autoCompleteOptions,
-  // autoSuggestionsUrlOptions,
   autoSuggestionsUrl,
 } from "./utils.js";
 
-function suggestionsHelper(suggestions, suggestionsContainer) {
+export function suggestionsHelper(suggestions, suggestionsContainer) {
   suggestionsContainer.innerHTML = "";
   if(suggestions.length===0) {
     return;
   }
   suggestionsContainer.innerHTML = "";
+  suggestionsContainer.style.display="flex";
+  suggestionsContainer.style.flexDirection="column";
   const heading = document.createElement("h2");
   heading.innerText = "Suggestions";
   heading.style.color = "white";
@@ -28,7 +29,7 @@ function suggestionsHelper(suggestions, suggestionsContainer) {
   });
 }
 
-function completionsHelper(completions, suggestionsContainer) {
+export function completionsHelper(completions, suggestionsContainer) {
   if(completions.length===0) {
     return;
   }
@@ -48,7 +49,7 @@ function completionsHelper(completions, suggestionsContainer) {
   });
 }
 
-function generateSuggestions(suggestions, suggestionsContainer, completions) {
+export function generateSuggestions(suggestions=[], suggestionsContainer, completions=[]) {
   suggestionsHelper(suggestions, suggestionsContainer);
   completionsHelper(completions, suggestionsContainer);
 }
@@ -68,21 +69,20 @@ function handleLoadingBar(delta) {
   }, 1000);
 }
 
-let timesCalled=0;
-function handleSuggestionsClick(e) {
+export function handleSuggestionsClick(e,className="",id="",videosId) {
     const target=e.target;
     const suggestion=document.getElementById(target.id);
+    const inputBar = document.getElementsByClassName(
+      className
+    )[0];
+    const suggestionsContainer = document.getElementById(id);
+    const videosContainer = document.getElementById(videosId);
     if(suggestion) {
-      if(timesCalled%2===0) {
-        suggestion.style.backgroundColor="red";
-      }
-      else {
-        suggestion.style.backgroundColor="";
-      }
-      timesCalled++;
-    }
-  
-    
+      inputBar.value=suggestion?.innerText;
+      suggestionsContainer.style.display="none";
+      videosContainer.innerHTML=""
+      return  inputBar.value;
+    }     
 }
 
 let thisCalled=0;
@@ -124,12 +124,12 @@ async function getAutoCompleteSuggestions(inputValue) {
     if(thisCalled>0) {
       suggestionsContainer.removeEventListener('click',handleSuggestionsClick);
     }
-    else suggestionsContainer.addEventListener('click',(e)=>handleSuggestionsClick(e));
+    else suggestionsContainer.addEventListener('click',(e)=>handleSuggestionsClick(e,"input_bar","auto_suggestions_correction"));
     thisCalled++;
   }
 }
 
-function debounce(fn, delay) {
+export function debounce(fn, delay) {
   let timer;
   return function (...args) {
     clearTimeout(timer);
@@ -141,7 +141,7 @@ function debounce(fn, delay) {
 
 const debouncedFn = debounce(getAutoCompleteSuggestions, 300);
 
-async function handleInputBar(e) {
+async function handleInputBar(e,debouncedFn) {
   const inputValue = e.target.value;
   const suggestionsContainer = document.getElementsByClassName(
     "auto_suggestions_correction"
@@ -155,5 +155,5 @@ async function handleInputBar(e) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const inputBar = document.getElementById("input_bar");
-  inputBar.addEventListener("keyup", handleInputBar);
+  inputBar.addEventListener("keyup", (e)=>handleInputBar(e,debouncedFn));
 });
