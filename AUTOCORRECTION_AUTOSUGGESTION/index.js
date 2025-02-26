@@ -30,7 +30,6 @@ export function suggestionsHelper(suggestions, suggestionsContainer) {
 }
 
 export function completionsHelper(completions, suggestionsContainer) {
-  console.log(completions, "completions");
   if (completions.length === 0) {
     return;
   }
@@ -39,11 +38,7 @@ export function completionsHelper(completions, suggestionsContainer) {
   heading2.style.color = "white";
   heading2.style.textAlign = "center";
   suggestionsContainer.appendChild(heading2);
-
-  // for(let i=0;i<completions.length;++i) console.log(completions[i])
-  console.log(completions.length);
   completions.forEach((com, i) => {
-    console.log(com, "COM");
     const cmp = document.createElement("h4");
     cmp.style.color = "white";
     cmp.style.textAlign = "center";
