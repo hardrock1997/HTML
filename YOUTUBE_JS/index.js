@@ -51,6 +51,33 @@ async function getAVideo(id) {
   return videoData
 }
 
+function handleBack(iframeBody,iframe,url) {
+    iframeBody.innerHTML="";
+    iframe.style.display="none";
+    showTrendingVideos();
+    window.location.href=url.split("?")[0];
+}
+
+function appendBackButton(iframeBody,iframe,url) {
+  const backButton=document.createElement("button");
+  backButton.addEventListener('click',()=>handleBack(iframeBody,iframe,url));
+  window.addEventListener('popstate',()=>handleBack(iframeBody,iframe,url))
+  backButton.innerText="Back";
+  iframeBody.appendChild(backButton);
+  return;
+}
+
+function setStylesForIframe(iframe,iframeBody) {
+  iframe.style.display="block";
+  const textContainer=iframeBody.children[0].children[1];
+  const imageContainer=iframeBody.children[0].children[0];
+  const image=imageContainer.children[0];
+  image.style.width="100%";
+  image.style.height = '100%';
+  image.style.objectFit = 'cover'; 
+  textContainer.style.textAlign="center";
+}
+
 
 async function handleVideoClick(e) {
   const videos = document.getElementById("videos");
@@ -58,19 +85,19 @@ async function handleVideoClick(e) {
   const videoData=await getAVideo(clickedVideoCard.getAttribute("id"));
   let clickedVideo=e.target.innerText.split('/n')[0].split('\n')[0];
   clickedVideo=clickedVideo.replaceAll(" ","");
-  const url=window.location.href+`?q=${clickedVideo}`
+  const url=window.location.href+`?q=${clickedVideo}`;
+  history.pushState({ page: "individualRecipe" },"",url);
   const iframe = document.getElementById("myIframe");
-  iframe.src=url;
     try {
       const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
       const iframeBody = iframeDoc.body;
       generateCard([videoData],iframeBody);
+      appendBackButton(iframeBody,iframe,url);
       videos.innerHTML=""
-      iframe.style.display="block";
+      setStylesForIframe(iframe,iframeBody);
     } catch (error) {
       console.error("Cannot access iframe content:", error);
     }
-  // }
 }
 
 async function showTrendingVideos() {
@@ -96,12 +123,16 @@ async function getSearchedVideos(searchValue) {
     suggestionsContainer.removeEventListener('click',handleSuggestionsClick);
   }
  suggestionsContainer.addEventListener('click',(e)=> {
-  const searchVal=handleSuggestionsClick(e,"search_input","suggestions","videos")
+  let searchVal=handleSuggestionsClick(e,"search_input","suggestions","videos")
   const index=trendingVideos.findIndex((ele)=>ele.name===searchVal);
+  searchVal=searchVal.replaceAll(" ","");
+  const url=window.location.href+`?q=${searchVal}`;
+  history.pushState({ page: "individualRecipe" },"",url);
   generateCard([trendingVideos[index]],document.getElementById("videos"));
   const backButton=document.getElementById("back_button");
   backButton.style.display="inline-block";
   backButton.addEventListener('click',(e)=>{
+    window.location.href=url.split("?")[0];
     const videosContainer=document.getElementById("videos");
     videosContainer.innerHTML="";
     generateCard(trendingVideos,videosContainer);
