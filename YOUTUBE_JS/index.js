@@ -25,15 +25,17 @@ const generateCard = (trendingVideos, videos) => {
     trendingVideos.forEach((video) => {
       const videoContainer = document.createElement("div");
       videoContainer.setAttribute("class", "video_container");
-      const imageSrc=video.image;
+      videoContainer.setAttribute("id",video.id);
+      const imageSrc=video?.image;
       videoContainer.innerHTML = `
-                <div class="image_container">
+                <div class="image_container id=${video.id}">
                 <img src=${imageSrc} alt=Video_thumbnail />
                 </div>
-                <div class="text_container">
-                    <h4>${video.name}</h4>
-                    <h6>${video.cuisine}</h6>
+                <div class="text_container id=${video.id}">
+                    <h4>${video?.name}</h4>
+                    <h6>${video?.cuisine}</h6>
                 </div>
+              </d>
             `;
       videos.appendChild(videoContainer);
     });
@@ -42,9 +44,39 @@ const generateCard = (trendingVideos, videos) => {
 
 let trendingVideos=[];
 
+
+async function getAVideo(id) {
+  const data=id && await fetch(`https://dummyjson.com/recipes/${id}`);
+  const videoData=await data.json();
+  return videoData
+}
+
+
+async function handleVideoClick(e) {
+  const videos = document.getElementById("videos");
+  const clickedVideoCard=document.getElementById(e.target?.classList[1]?.split("=")[1])
+  const videoData=await getAVideo(clickedVideoCard.getAttribute("id"));
+  let clickedVideo=e.target.innerText.split('/n')[0].split('\n')[0];
+  clickedVideo=clickedVideo.replaceAll(" ","");
+  const url=window.location.href+`?q=${clickedVideo}`
+  const iframe = document.getElementById("myIframe");
+  iframe.src=url;
+    try {
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+      const iframeBody = iframeDoc.body;
+      generateCard([videoData],iframeBody);
+      videos.innerHTML=""
+      iframe.style.display="block";
+    } catch (error) {
+      console.error("Cannot access iframe content:", error);
+    }
+  // }
+}
+
 async function showTrendingVideos() {
   trendingVideos = await getTrendingVideos();
   const videos = document.getElementById("videos");
+  videos.addEventListener('click',handleVideoClick)
   generateCard(trendingVideos, videos);
 }
 

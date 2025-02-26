@@ -155,5 +155,5 @@ async function handleInputBar(e,debouncedFn) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const inputBar = document.getElementById("input_bar");
-  inputBar.addEventListener("keyup", (e)=>handleInputBar(e,debouncedFn));
+  inputBar?.addEventListener("keyup", (e)=>handleInputBar(e,debouncedFn));
 });
