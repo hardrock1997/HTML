@@ -35,13 +35,10 @@ export function completionsHelper(completions, suggestionsContainer) {
     return;
   }
   const heading2 = document.createElement("h2");
-  heading2.textContent = "History";
+  heading2.textContent = "Last suggestion selected";
   heading2.style.color = "white";
   heading2.style.textAlign = "center";
   suggestionsContainer.appendChild(heading2);
-
-  // for(let i=0;i<completions.length;++i) console.log(completions[i])
-  console.log(completions.length);
   completions.forEach((com, i) => {
     console.log(com, "COM");
     const cmp = document.createElement("h4");
